@@ -10,10 +10,9 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME            => 'HTML::Tagset',
     AUTHOR          => 'Andy Lester <andy@petdance.com>',
-    VERSION_FROM    => 'Tagset.pm', # finds $VERSION
-    ABSTRACT_FROM   => 'Tagset.pm', # retrieve abstract from module
+    VERSION_FROM    => 'lib/HTML/Tagset.pm',
+    ABSTRACT_FROM   => 'lib/HTML/Tagset.pm',
     PMLIBDIRS       => [qw(lib/)],
     dist            => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean           => { FILES => 'HTML-Tagset-*' },
-
 );
