@@ -3,7 +3,7 @@ lib/HTML/Tagset.pm
 Makefile.PL
 MANIFEST
 MANIFEST.SKIP
-README
+README.md
 t/00_about_verbose.t
 t/01_old_junk.t
 t/pod.t
