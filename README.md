@@ -15,16 +15,16 @@ HTML::Tagset doesn't use any nonstandard modules.
 You install HTML::Tagset, as you would install any perl module
 library, by running these commands:
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 If you want to install a private copy of HTML::Tagset in your home
 directory, then you should try to produce the initial Makefile with
 something like this command:
 
-  perl Makefile.PL LIB=~/perl
+    perl Makefile.PL LIB=~/perl
 
 ## DOCUMENTATION
 
