@@ -11,19 +11,29 @@ HTML::Tagset - data tables useful in parsing HTML
 
 =head1 VERSION
 
-Version 3.20
+Version 5.0.0
 
 =cut
 
 use vars qw( $VERSION );
 
-$VERSION = '3.20';
+$VERSION = '5.0.0';
 
 =head1 SYNOPSIS
 
+  # Load HTML tags pre HTML5:
   use HTML::Tagset;
   # Then use any of the items in the HTML::Tagset package
   #  as need arises
+
+  # Load HTML 5 tags:
+  BEGIN {
+    $HTML::Tagset::HTML_VERSION='v5';
+  };
+  use HTML::Tagset;
+  # Then use as above
+  # This will also work if used before any higher-level
+  # HTML::Tagset-using modules, eg HTML::TreeBuilder;
 
 =head1 DESCRIPTION
 
@@ -57,6 +67,20 @@ use vars qw(
 Note that none of these variables are exported.
 
 =head2 HTML_VERSION
+
+Used to determine whether to load tags for parsing HTML5
+L<https://html.spec.whatwg.org/multipage/> or HTML 4 or below
+L<https://www.w3.org/TR/html4/>. This needs to be set before
+HTML::Tagset is loaded, using BEGIN. Set it to B<v5> to get HTML5
+tags, leave empty or set to anything else for HTML4 and below.
+
+NB: This can also be used before HTML::Tagset-using modules, eg
+L<HTML::TreeBuilder>.
+
+    BEGIN {
+      $HTML::Tagset::HTML_VERSION='v5';
+    };
+    use HTML::Tagset;
 
 =cut
 

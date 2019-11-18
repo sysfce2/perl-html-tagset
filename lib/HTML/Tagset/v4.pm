@@ -1,4 +1,5 @@
-package HTML::Tagset::v4;
+package # Hide package from pause
+  HTML::Tagset::v4;
 
 use strict;
 
@@ -8,13 +9,13 @@ HTML::Tagset::v4 - data tables useful in parsing HTML 4.x
 
 =head1 VERSION
 
-Version 3.20
+Version 5.0.0
 
 =cut
 
 use vars qw( $VERSION );
 
-$VERSION = '3.20';
+$VERSION = '5.0.0';
 
 =head1 SYNOPSIS
 
