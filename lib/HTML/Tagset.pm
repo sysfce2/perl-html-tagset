@@ -21,14 +21,14 @@ $VERSION = '5.0.0';
 
 =head1 SYNOPSIS
 
-  # Load HTML tags pre HTML5:
+  # Load HTML5 tags
   use HTML::Tagset;
   # Then use any of the items in the HTML::Tagset package
   #  as need arises
 
-  # Load HTML 5 tags:
+  # Load HTML3/4 tags:
   BEGIN {
-    $HTML::Tagset::HTML_VERSION='v5';
+    $HTML::Tagset::HTML_VERSION='v4';
   };
   use HTML::Tagset;
   # Then use as above
@@ -36,6 +36,10 @@ $VERSION = '5.0.0';
   # HTML::Tagset-using modules, eg HTML::TreeBuilder;
 
 =head1 DESCRIPTION
+
+BREAKING CHANGE: From version 5.0, this module will default to loading
+HTML5 tags (previously HTML4 and below), see docs on how to get the
+previous behaviour.
 
 This module contains several data tables useful in various kinds of
 HTML parsing operations.
@@ -71,14 +75,15 @@ Note that none of these variables are exported.
 Used to determine whether to load tags for parsing HTML5
 L<https://html.spec.whatwg.org/multipage/> or HTML 4 or below
 L<https://www.w3.org/TR/html4/>. This needs to be set before
-HTML::Tagset is loaded, using BEGIN. Set it to B<v5> to get HTML5
-tags, leave empty or set to anything else for HTML4 and below.
+HTML::Tagset is loaded, using BEGIN. Set it to B<v4> to get HTML4
+tags and below, leave empty or set to anything else for HTML5.
 
 NB: This can also be used before HTML::Tagset-using modules, eg
 L<HTML::TreeBuilder>.
 
+    # Load Tagset for HTML4
     BEGIN {
-      $HTML::Tagset::HTML_VERSION='v5';
+      $HTML::Tagset::HTML_VERSION='v4';
     };
     use HTML::Tagset;
 
@@ -93,7 +98,8 @@ C<$HTML::Tagset::emptyElement{'dl'}> does not exist, and so is not true.
 
 =cut
 
-if($HTML_VERSION eq 'v5') {
+if(!$HTML_VERSION || $HTML_VERSION ne 'v4') {
+    # default to v5
     %emptyElement     = %HTML::Tagset::v5::emptyElement;
     %optionalEndTag   = %HTML::Tagset::v5::optionalEndTag;
     %linkElements     = %HTML::Tagset::v5::linkElements;
@@ -111,7 +117,7 @@ if($HTML_VERSION eq 'v5') {
     @p_closure_barriers  = @HTML::Tagset::v5::p_closure_barriers;
     %isCDATA_Parent   = %HTML::Tagset::v5::isCDATA_Parent;
 } else {
-    # default to v4
+    # v4
     %emptyElement     = %HTML::Tagset::v4::emptyElement;
     %optionalEndTag   = %HTML::Tagset::v4::optionalEndTag;
     %linkElements     = %HTML::Tagset::v4::linkElements;
