@@ -1,5 +1,4 @@
-package # Hide package from pause
-  HTML::Tagset::v5;
+package HTML::Tagset::v5;
 
 use strict;
 
