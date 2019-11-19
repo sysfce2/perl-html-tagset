@@ -37,8 +37,8 @@ $VERSION = '5.0.0';
 
 =head1 DESCRIPTION
 
-BREAKING CHANGE: From version 5.0, this module will default to loading
-HTML5 tags (previously HTML4 and below), see docs on how to get the
+BREAKING CHANGE: From version 5.0.0, this module defaults to loading
+HTML5 tags (previously HTML4 and below). See docs on how to get the
 previous behaviour.
 
 This module contains several data tables useful in various kinds of
