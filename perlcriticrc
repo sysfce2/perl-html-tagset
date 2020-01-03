@@ -1,10 +1,14 @@
 verbose = %f:%l:%c %m (%p)\n    %r\n\n
 
+[-CodeLayout::RequireTidyCode]
+[-CodeLayout::RequireTrailingCommaAtNewline]
+[-CodeLayout::RequireTrailingCommas]
 
 [Compatibility::PodMinimumVersion]
 above_version = 5.010001
 
 [-Documentation::PodSpelling]
+[-Documentation::RequireLinkedURLs]
 [-Documentation::RequirePodAtEnd]
 [-Documentation::RequirePodLinksIncludeText]
 [-Documentation::RequirePodSections]
@@ -16,5 +20,3 @@ above_version = 5.010001
 
 [-Variables::ProhibitPackageVars]
 # The entire module is package vars.
-
-
