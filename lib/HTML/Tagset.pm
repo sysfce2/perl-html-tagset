@@ -360,7 +360,7 @@ Copyright 1995-2000 Gisle Aas.
 
 Copyright 2000-2005 Sean M. Burke.
 
-Copyright 2005-2019 Andy Lester.
+Copyright 2005-2020 Andy Lester.
 
 This library is free software; you can redistribute it and/or modify it
 under the terms of the Artistic License version 2.0.
