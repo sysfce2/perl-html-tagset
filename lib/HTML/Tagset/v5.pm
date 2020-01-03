@@ -1,6 +1,8 @@
 package HTML::Tagset::v5;
 
+use warnings;
 use strict;
+use 5.010;
 
 =head1 NAME
 

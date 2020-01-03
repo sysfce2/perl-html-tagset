@@ -1,6 +1,8 @@
 package HTML::Tagset;
 
+use warnings;
 use strict;
+use 5.010;
 
 use HTML::Tagset::v4;
 use HTML::Tagset::v5;

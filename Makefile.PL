@@ -3,7 +3,9 @@
 # See "perldoc perlmodinstall" or "perldoc ExtUtils::MakeMaker" for
 # info on how to control how the installation goes.
 
-require 5.004;
+require 5.010;
+
+use warnings;
 use strict;
 use ExtUtils::MakeMaker;
 
