@@ -14,9 +14,7 @@ Version 5.0.0
 
 =cut
 
-use vars qw( $VERSION );
-
-$VERSION = '5.0.0';
+our $VERSION = '5.0.0';
 
 =head1 SYNOPSIS
 
@@ -37,20 +35,6 @@ set -- the hash conveys that its keys are there, and the actual values
 associated with the keys are not significant.  (But what values are
 there, are always true.)
 
-=cut
-
-use vars qw(
-    $VERSION
-    %emptyElement %optionalEndTag %linkElements %boolean_attr
-    %isHeadElement %isBodyElement %isPhraseMarkup
-    %is_Possible_Strict_P_Content
-    %isHeadOrBodyElement
-    %isList %isTableElement %isFormElement
-    %isKnown %canTighten
-    @p_closure_barriers
-    %isCDATA_Parent
-);
-
 =head1 VARIABLES
 
 Note that none of these variables are exported.
@@ -64,13 +48,29 @@ C<$HTML::Tagset::emptyElement{'dl'}> does not exist, and so is not true.
 
 =cut
 
-%emptyElement   = map {; $_ => 1 } qw(area base br col embed
-                                      hr iframe img input link
-                                      meta param source template
-                                      track wbr
-                                     ~comment ~literal
-                                     ~declaration ~pi
-                                    );
+our %emptyElement = map {; $_ => 1 } qw(
+    area
+    base
+    br
+    col
+    embed
+    hr
+    iframe
+    img
+    input
+    link
+    meta
+    param
+    source
+    template
+    track
+    wbr
+
+    ~comment
+    ~declaration
+    ~literal
+    ~pi
+);
 # The "~"-initial names are for pseudo-elements used by HTML::Entities
 #  and TreeBuilder
 
@@ -82,7 +82,7 @@ C<$HTML::Tagset::emptyElement{'li'}> exists and is true.
 
 =cut
 
-%optionalEndTag = map {; $_ => 1 } qw(p li dt dd);
+our %optionalEndTag = map {; $_ => 1 } qw(p li dt dd);
 #v4
 # option th tr td);
 
@@ -94,23 +94,22 @@ of attributes whose values can be links.
 
 =cut
 
-%linkElements =
-(
- 'a'       => ['href'],
- 'area'    => ['href'],
- 'base'    => ['href'],
- 'blockquote' => ['cite'],
- 'del'     => ['cite'],
- 'embed'   => ['src'],
- 'form'    => ['action'],
- 'iframe'  => ['src'],
- 'img'     => ['src', 'usemap'],
- 'input'   => ['src'],
- 'ins'     => ['cite'],
- 'link'    => ['href'],
- 'object'  => ['data', 'usemap'],
- 'q'       => ['cite'],
- 'script'  => ['src'],
+our %linkElements = (
+    a          => ['href'],
+    area       => ['href'],
+    base       => ['href'],
+    blockquote => ['cite'],
+    del        => ['cite'],
+    embed      => ['src'],
+    form       => ['action'],
+    iframe     => ['src'],
+    img        => ['src', 'usemap'],
+    input      => ['src'],
+    ins        => ['cite'],
+    link       => ['href'],
+    object     => ['data', 'usemap'],
+    q          => ['cite'],
+    script     => ['src'],
 );
 
 # v4
@@ -127,27 +126,28 @@ the value is a reference to a hashset containing all such attributes.
 =cut
 
 # 'hidden', 'itemscope', apply to all elements!
-%boolean_attr = (
-  'area'     => { 'nohref' => 1 },
-  'audio'    => { 'controls' => 1, 'loop' => 1, 'muted' => 1, },
-  'button'   => { 'disabled' => 1, 'formnovalidate' => 1 },
-  'details'  => { 'open' => 1, },
-  'dialog'   => { 'open' => 1, },
-  'fieldset' => { 'disabled' => 1 },
-  'form'     => { 'novalidate' => 1, },
-  'img'      => { 'ismap' => 1 },
-  'iframe'   => { 'allowfullscreen' => 1, 'allowpaymentrequest' => 1 },
-  'input'    => { 'checked' => 1, 'readonly' => 1, 'disabled' => 1, 'required' => 1, 'multiple' => 1, 'formnovalidate' => 1, 'hidden' => 1, },
-  'ol'       => { 'reversed' => 1 },
-  'optgroup' => { 'disabled' => 1 },
-  'option'   => { 'disabled' => 1, 'selected' => 1 },
-  'script'   => { 'async' => 1, 'defer' => 1, 'nomodule' => 1, },
-  'select'   => { 'multiple' => 1, 'disabled' => 1, 'readonly' => 1,  },
-  'textarea' => { 'disabled' => 1, 'readonly' => 1, 'required' => 1, },
-  'track'    => { 'default' => 1 },
-  'video'    => { 'controls' => 1, 'loop' => 1, 'muted' => 1, 'playsinline' => 1, },
-  ( map {; { 'hidden'    => 1 } } (keys %isKnown) ),
-  ( map {; { 'itemscope' => 1 } } (keys %isKnown) ),
+use vars qw( %isKnown %isFormElement ); # Defined later.
+our %boolean_attr = (
+    area     => { nohref => 1 },
+    audio    => { controls => 1, loop => 1, muted => 1, },
+    button   => { disabled => 1, formnovalidate => 1 },
+    details  => { open => 1, },
+    dialog   => { open => 1, },
+    fieldset => { disabled => 1 },
+    form     => { novalidate => 1, },
+    img      => { ismap => 1 },
+    iframe   => { allowfullscreen => 1, allowpaymentrequest => 1 },
+    input    => { checked => 1, readonly => 1, disabled => 1, required => 1, multiple => 1, formnovalidate => 1, hidden => 1, },
+    ol       => { reversed => 1 },
+    optgroup => { disabled => 1 },
+    option   => { disabled => 1, selected => 1 },
+    script   => { async => 1, defer => 1, nomodule => 1, },
+    select   => { multiple => 1, disabled => 1, readonly => 1,  },
+    textarea => { disabled => 1, readonly => 1, required => 1, },
+    track    => { default => 1 },
+    video    => { controls => 1, loop => 1, muted => 1, playsinline => 1, },
+    ( map {; { hidden    => 1 } } keys %isKnown ),
+    ( map {; { itemscope => 1 } } keys %isKnown ),
 );
 
 #v4
@@ -182,9 +182,64 @@ This hashset contains all phrasal-level elements.
 =cut
 
 # https://html.spec.whatwg.org/multipage/dom.html#phrasing-content-2
-%isPhraseMarkup = map {; $_ => 1 } qw(
-  a abbr audio b bdi bdo br button canvas cite code data datalist del dfn em embed i iframe img input ins kbd keygen label map mark math meter noscript object output picture progress q ruby s samp script select slot small span strong sub sup svg template textarea time u var video wbr
-  area link meta
+our %isPhraseMarkup = map {; $_ => 1 } qw(
+    a
+    abbr
+    area
+    audio
+    b
+    bdi
+    bdo
+    br
+    button
+    canvas
+    cite
+    code
+    data
+    datalist
+    del
+    dfn
+    em
+    embed
+    i
+    iframe
+    img
+    input
+    ins
+    kbd
+    keygen
+    label
+    link
+    map
+    mark
+    math
+    meta
+    meter
+    noscript
+    object
+    output
+    picture
+    progress
+    q
+    ruby
+    s
+    samp
+    script
+    select
+    slot
+    small
+    span
+    strong
+    sub
+    sup
+    svg
+    template
+    textarea
+    time
+    u
+    var
+    video
+    wbr
 );  # had: center, hr, table
 # v4
 # acronym
@@ -201,12 +256,12 @@ P element, for a strict model of HTML.
 
 =cut
 
-%is_Possible_Strict_P_Content = (
- %isPhraseMarkup,
- %isFormElement,
- map {; $_ => 1} qw( object script map )
-  # I've no idea why there's these latter exceptions.
-  # I'm just following the HTML4.01 DTD.
+our %is_Possible_Strict_P_Content = (
+    %isPhraseMarkup,
+    %isFormElement,
+    map {; $_ => 1} qw( object script map )
+    # I've no idea why there's these latter exceptions.
+    # I'm just following the HTML4.01 DTD.
 );
 
 #from html4 strict:
@@ -230,8 +285,10 @@ present only in the 'head' element of an HTML document.
 
 =cut
 
-%isHeadElement = map {; $_ => 1 }
-qw(base title);
+our %isHeadElement = map {; $_ => 1 } qw(
+    base
+    title
+);
 #v4
 # isindex object(allowed in body) bgsound link(allowed in body) meta(ditto)
 
@@ -241,7 +298,11 @@ This hashset contains all elements that can contain "li" elements.
 
 =cut
 
-%isList         = map {; $_ => 1 } qw(ul ol menu);
+our %isList = map {; $_ => 1 } qw(
+    ul
+    ol
+    menu
+);
 #v4
 # dir
 
@@ -252,8 +313,17 @@ a "table" element.
 
 =cut
 
-%isTableElement = map {; $_ => 1 }
- qw(caption colgroup col thead tbody tfoot tr td th);
+our %isTableElement = map {; $_ => 1 } qw(
+    caption
+    col
+    colgroup
+    tbody
+    td
+    tfoot
+    th
+    thead
+    tr
+);
 
 =head2 hashset %HTML::Tagset::isFormElement
 
@@ -262,8 +332,13 @@ a "form" element.
 
 =cut
 
-%isFormElement  = map {; $_ => 1 }
-qw(input optgroup select textarea label);
+our %isFormElement  = map {; $_ => 1 } qw(
+    input
+    label
+    optgroup
+    select
+    textarea
+);
 
 # v4
 # button
@@ -275,34 +350,35 @@ the "body" element of an HTML document.
 
 =cut
 
-%isBodyElement = map {; $_ => 1 } qw(
-  h1 h2 h3 h4 h5 h6 hgroup
-  p div pre address blockquote
+our %isBodyElement = map {; $_ => 1 }
+    qw(
+        h1 h2 h3 h4 h5 h6 hgroup
+        p div pre address blockquote
 
-  iframe
+        iframe
 
-  hr
-  ol ul menu li menuitem
-  dl dt dd
-  ins del
-  
-  fieldset legend
-  
-  map area
-  param object
-  script noscript
-  table
-  form
-  option dl
+        hr
+        ol ul menu li menuitem
+        dl dt dd
+        ins del
 
-  article aside details summary dialog footer header main nav section
-  source track
-  figure figcaption
-  rp rt
- ),
- keys %isFormElement,
- keys %isPhraseMarkup,   # And everything phrasal
- keys %isTableElement,
+        fieldset legend
+
+        map area
+        param object
+        script noscript
+        table
+        form
+        option dl
+
+        article aside details summary dialog footer header main nav section
+        source track
+        figure figcaption
+        rp rt
+    ),
+    keys %isFormElement,
+    keys %isPhraseMarkup,   # And everything phrasal
+    keys %isTableElement,
 ;
 
 # v4
@@ -315,8 +391,18 @@ the head or in the body.
 
 =cut
 
-%isHeadOrBodyElement = map {; $_ => 1 }
-  qw(script style object map area param noscript template link meta);
+our %isHeadOrBodyElement = map {; $_ => 1 } qw(
+    area
+    link
+    map
+    meta
+    noscript
+    object
+    param
+    script
+    style
+    template
+);
   # i.e., if we find 'script' in the 'body' or the 'head', don't freak out.
 
 # isindex bgsound
@@ -327,7 +413,7 @@ This hashset lists all known HTML elements.
 
 =cut
 
-%isKnown = (%isHeadElement, %isBodyElement, %isHeadOrBodyElement,
+our %isKnown = (%isHeadElement, %isBodyElement, %isHeadOrBodyElement,
   map{; $_=>1 }
    qw( head body html
        ~comment ~pi ~directive ~literal
@@ -343,10 +429,10 @@ children or siblings.
 
 =cut
 
-%canTighten = %isKnown;
+our %canTighten = %isKnown;
 delete @canTighten{
-  keys(%isPhraseMarkup), 'input', 'select',
-  'xmp', 'listing', 'plaintext', 'pre',
+    keys(%isPhraseMarkup),
+    qw( input select xmp listing plaintext pre )
 };
   # xmp, listing, plaintext, and pre  are untightenable, and
   #   in a really special way.
@@ -403,7 +489,7 @@ barrier-tags.
 
 =cut
 
-@p_closure_barriers = qw(
+our @p_closure_barriers = qw(
   li blockquote
   ul ol menu dir
   dl dt dd
@@ -420,7 +506,7 @@ This hashset includes all elements whose content is CDATA.
 
 =cut
 
-%isCDATA_Parent = map {; $_ => 1 }
+our %isCDATA_Parent = map {; $_ => 1 }
   qw(script style  xmp listing plaintext);
 
 # TODO: there's nothing else that takes CDATA children, right?
@@ -460,7 +546,7 @@ Copyright 1995-2000 Gisle Aas.
 
 Copyright 2000-2005 Sean M. Burke.
 
-Copyright 2005-2008 Andy Lester.
+Copyright 2005-2020 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
