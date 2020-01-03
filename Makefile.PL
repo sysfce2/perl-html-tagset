@@ -33,3 +33,15 @@ if ( $ExtUtils::MakeMaker::VERSION ge '6.46' ) {
 }
 
 WriteMakefile( %{$parms} );
+
+
+sub MY::postamble {
+    my $postamble = <<'MAKE_FRAG';
+.PHONY: critic
+
+critic:
+	perlcritic -1 -q -profile perlcriticrc lib/HTML/Tagset.pm lib/HTML/Tagset/*.pm
+MAKE_FRAG
+
+    return $postamble;
+}

@@ -1,0 +1,20 @@
+verbose = %f:%l:%c %m (%p)\n    %r\n\n
+
+
+[Compatibility::PodMinimumVersion]
+above_version = 5.010001
+
+[-Documentation::PodSpelling]
+[-Documentation::RequirePodAtEnd]
+[-Documentation::RequirePodLinksIncludeText]
+[-Documentation::RequirePodSections]
+
+[-NamingConventions::Capitalization]
+
+[-ValuesAndExpressions::ProhibitEmptyQuotes]
+[-ValuesAndExpressions::RequireNumericVersion]
+
+[-Variables::ProhibitPackageVars]
+# The entire module is package vars.
+
+
