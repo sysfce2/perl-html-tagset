@@ -3,8 +3,10 @@ Revision history for Perl extension HTML::Tagset
 NEXT
         * Release 5.0.0 -- Added HTML5 support (configurable, defaults to HTML4)
 
-CHANGES LIST TO BE UPDATE:
+CHANGES LIST TO BE UPDATED:
 * Requires Perl 5.10.
+
+* XXX Explanation of what has changed in 5.0.0.
 
 
 

@@ -23,19 +23,22 @@ $VERSION = '5.0.0';
 
 =head1 SYNOPSIS
 
-  # Load HTML5 tags
-  use HTML::Tagset;
-  # Then use any of the items in the HTML::Tagset package
-  #  as need arises
+    # Load HTML5 tags
+    use HTML::Tagset;
 
-  # Load HTML3/4 tags:
-  BEGIN {
-    $HTML::Tagset::HTML_VERSION='v4';
-  };
-  use HTML::Tagset;
-  # Then use as above
-  # This will also work if used before any higher-level
-  # HTML::Tagset-using modules, eg HTML::TreeBuilder;
+    # Optionally load HTML3/4 tags for legacy programs, if necessary.
+    BEGIN {
+        $HTML::Tagset::HTML_VERSION='v4';
+    };
+
+    XXX Show example of how you'd use HTML::Tagset.
+
+    use HTML::Tagset;
+    # Then use as above
+
+    # This will also work if used before any higher-level
+    # HTML::Tagset-using modules, eg HTML::TreeBuilder;
+    XXX Show example of how you would do this.
 
 =head1 DESCRIPTION
 
@@ -68,9 +71,10 @@ use vars qw(
     %isCDATA_Parent
 );
 
-=head1 VARIABLES
+=head1 EXPORTS
 
-Note that none of these variables are exported.
+None.  All variables must be used fully-qualified, e.g.
+C<HTML::Tagset::isKnown>
 
 =head2 HTML_VERSION
 
@@ -85,7 +89,7 @@ L<HTML::TreeBuilder>.
 
     # Load Tagset for HTML4
     BEGIN {
-      $HTML::Tagset::HTML_VERSION='v4';
+        $HTML::Tagset::HTML_VERSION='v4';
     };
     use HTML::Tagset;
 
@@ -100,7 +104,7 @@ C<$HTML::Tagset::emptyElement{'dl'}> does not exist, and so is not true.
 
 =cut
 
-if(!$HTML_VERSION || $HTML_VERSION ne 'v4') {
+if (!$HTML_VERSION || $HTML_VERSION ne 'v4') {
     # default to v5
     %emptyElement     = %HTML::Tagset::v5::emptyElement;
     %optionalEndTag   = %HTML::Tagset::v5::optionalEndTag;
@@ -118,7 +122,8 @@ if(!$HTML_VERSION || $HTML_VERSION ne 'v4') {
     %canTighten       = %HTML::Tagset::v5::canTighten;
     @p_closure_barriers  = @HTML::Tagset::v5::p_closure_barriers;
     %isCDATA_Parent   = %HTML::Tagset::v5::isCDATA_Parent;
-} else {
+}
+else {
     # v4
     %emptyElement     = %HTML::Tagset::v4::emptyElement;
     %optionalEndTag   = %HTML::Tagset::v4::optionalEndTag;
@@ -144,16 +149,11 @@ This hashset lists tag-names for elements that can have content, but whose
 end-tags are generally, "safely", omissible.  Example:
 C<$HTML::Tagset::emptyElement{'li'}> exists and is true.
 
-=cut
-
 =head2 hash %HTML::Tagset::linkElements
 
 Values in this hash are tagnames for elements that might contain
 links, and the value for each is a reference to an array of the names
 of attributes whose values can be links.
-
-=cut
-
 
 =head2 hash %HTML::Tagset::boolean_attr
 
@@ -191,8 +191,6 @@ the value is a reference to a hashset containing all such attributes.
 
 This hashset contains all phrasal-level elements.
 
-=cut
-
 =head2 hashset %HTML::Tagset::is_Possible_Strict_P_Content
 
 This hashset contains all phrasal-level elements that be content of a
@@ -219,48 +217,33 @@ P element, for a strict model of HTML.
 This hashset contains all elements that elements that should be
 present only in the 'head' element of an HTML document.
 
-=cut
-
 =head2 hashset %HTML::Tagset::isList
 
 This hashset contains all elements that can contain "li" elements.
-
-=cut
 
 =head2 hashset %HTML::Tagset::isTableElement
 
 This hashset contains all elements that are to be found only in/under
 a "table" element.
 
-=cut
-
 =head2 hashset %HTML::Tagset::isFormElement
 
 This hashset contains all elements that are to be found only in/under
 a "form" element.
-
-=cut
 
 =head2 hashset %HTML::Tagset::isBodyMarkup
 
 This hashset contains all elements that are to be found only in/under
 the "body" element of an HTML document.
 
-=cut
-
-
 =head2 hashset %HTML::Tagset::isHeadOrBodyElement
 
 This hashset includes all elements that I notice can fall either in
 the head or in the body.
 
-=cut
-
 =head2 hashset %HTML::Tagset::isKnown
 
 This hashset lists all known HTML elements.
-
-=cut
 
 =head2 hashset %HTML::Tagset::canTighten
 
