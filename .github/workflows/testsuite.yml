@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: perl -V
         run: perl -V
       - name: Install Dependencies
@@ -67,7 +67,7 @@ jobs:
       image: perl:${{ matrix.perl-version }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: perl -V
         run: perl -V
       - name: Install Dependencies
@@ -91,7 +91,7 @@ jobs:
       PERL_CARTON_PATH: $GITHUB_WORKSPACE/local
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Set up Perl
         run: brew install perl
       - name: perl -V
@@ -110,7 +110,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Set up Perl
         run: |
           choco install strawberryperl
