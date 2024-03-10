@@ -13,6 +13,9 @@ my %parms = (
     VERSION_FROM     => 'lib/HTML/Tagset.pm',
     LICENSE          => 'artistic_2',
     MIN_PERL_VERSION => 5.010001,
+    TEST_REQUIRES    => {
+        'Test::More' => '0.95',
+    },
     META_MERGE       => {
         resources => {
             license     => 'https://opensource.org/licenses/artistic-license-2.0',

@@ -6,5 +6,5 @@ on 'build' => sub {
 };
 
 on 'test' => sub {
-    requires 'Test::More', '0.94';  # So we can run subtests on v5.10
+    requires 'Test::More', '0.95';
 };
