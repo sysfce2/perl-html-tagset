@@ -8,7 +8,7 @@ HTML::Tagset - data tables useful in parsing HTML
 
 =head1 VERSION
 
-Version 3.21
+Version 3.22
 
 =cut
 

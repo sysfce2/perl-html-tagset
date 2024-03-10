@@ -1,8 +1,8 @@
 Revision history for Perl extension HTML::Tagset
 
-NEXT
+2024-03-09  Andy Lester
 
-        * Release 3.21_01
+        * Release 3.22
 
         HTML::Tagset now requires Perl 5.10.1. It might run on earlier
         Perls but I don't have the infrastructure to test them.
@@ -13,6 +13,11 @@ NEXT
         (RT #34913, RT #109024, RT #118356)
 
         Cleaned up metadata and version requirements.
+
+        No changes have been made to handle HTML5. That is a bigger issue
+        than "just add the tags to the hashes," because that would change
+        functionality for existing users who are expecting HTML::Tagset to
+        be HTML4.
 
 2008-02-29  Andy Lester
 
