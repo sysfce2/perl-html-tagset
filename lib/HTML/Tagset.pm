@@ -8,13 +8,13 @@ HTML::Tagset - data tables useful in parsing HTML
 
 =head1 VERSION
 
-Version 3.20
+Version 3.21
 
 =cut
 
 use vars qw( $VERSION );
 
-$VERSION = '3.20';
+$VERSION = '3.21_01';
 
 =head1 SYNOPSIS
 
@@ -180,7 +180,8 @@ This hashset contains all phrasal-level elements.
 %isPhraseMarkup = map {; $_ => 1 } qw(
   span abbr acronym q sub sup
   cite code em kbd samp strong var dfn strike
-  b i u s tt small big 
+  b i u s tt small big
+  ins del
   a img br
   wbr nobr blink
   font basefont bdo

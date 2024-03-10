@@ -2,10 +2,12 @@ Revision history for Perl extension HTML::Tagset
 
 NEXT
 
-        * Release 3.22
+        * Release 3.21_01
 
         HTML::Tagset now requires Perl 5.10.1. It might run on earlier
         Perls but I don't have the infrastructure to test them.
+
+        Added <ins> and <del> to %isPhraseMarkup (RT #151970)
 
 2008-02-29  Andy Lester
 
