@@ -12,9 +12,7 @@ Version 3.21
 
 =cut
 
-use vars qw( $VERSION );
-
-$VERSION = '3.21_01';
+our $VERSION = '3.22';
 
 =head1 SYNOPSIS
 
@@ -34,20 +32,6 @@ set -- the hash conveys that its keys are there, and the actual values
 associated with the keys are not significant.  (But what values are
 there, are always true.)
 
-=cut
-
-use vars qw(
-    $VERSION
-    %emptyElement %optionalEndTag %linkElements %boolean_attr
-    %isHeadElement %isBodyElement %isPhraseMarkup
-    %is_Possible_Strict_P_Content
-    %isHeadOrBodyElement
-    %isList %isTableElement %isFormElement
-    %isKnown %canTighten
-    @p_closure_barriers
-    %isCDATA_Parent
-);
-
 =head1 VARIABLES
 
 Note that none of these variables are exported.
@@ -61,7 +45,8 @@ C<$HTML::Tagset::emptyElement{'dl'}> does not exist, and so is not true.
 
 =cut
 
-%emptyElement   = map {; $_ => 1 } qw(base link meta isindex
+our %emptyElement   = map { $_ => 1 } qw(
+                                     base link meta isindex
                                      img br hr wbr
                                      input area param
                                      embed bgsound spacer
@@ -80,7 +65,9 @@ C<$HTML::Tagset::emptyElement{'li'}> exists and is true.
 
 =cut
 
-%optionalEndTag = map {; $_ => 1 } qw(p li dt dd); # option th tr td);
+our %optionalEndTag = map { $_ => 1 } qw(
+    p li dt dd
+); # option th tr td);
 
 =head2 hash %HTML::Tagset::linkElements
 
@@ -90,7 +77,7 @@ of attributes whose values can be links.
 
 =cut
 
-%linkElements =
+our %linkElements =
 (
  'a'       => ['href'],
  'applet'  => ['archive', 'codebase', 'code'],
@@ -132,7 +119,7 @@ the value is a reference to a hashset containing all such attributes.
 
 =cut
 
-%boolean_attr = (
+our %boolean_attr = (
 # TODO: make these all hashes
   'area'   => 'nohref',
   'dir'    => 'compact',
@@ -177,7 +164,7 @@ This hashset contains all phrasal-level elements.
 
 =cut
 
-%isPhraseMarkup = map {; $_ => 1 } qw(
+our %isPhraseMarkup = map { $_ => 1 } qw(
   span abbr acronym q sub sup
   cite code em kbd samp strong var dfn strike
   b i u s tt small big
@@ -196,7 +183,8 @@ P element, for a strict model of HTML.
 
 =cut
 
-%is_Possible_Strict_P_Content = (
+our %isFormElement; # Forward declaration
+our %is_Possible_Strict_P_Content = (
  %isPhraseMarkup,
  %isFormElement,
  map {; $_ => 1} qw( object script map )
@@ -225,7 +213,7 @@ present only in the 'head' element of an HTML document.
 
 =cut
 
-%isHeadElement = map {; $_ => 1 }
+our %isHeadElement = map { $_ => 1 }
  qw(title base link meta isindex script style object bgsound);
 
 =head2 hashset %HTML::Tagset::isList
@@ -234,7 +222,9 @@ This hashset contains all elements that can contain "li" elements.
 
 =cut
 
-%isList         = map {; $_ => 1 } qw(ul ol dir menu);
+our %isList = map { $_ => 1 } qw(
+    ul ol dir menu
+);
 
 =head2 hashset %HTML::Tagset::isTableElement
 
@@ -243,7 +233,7 @@ a "table" element.
 
 =cut
 
-%isTableElement = map {; $_ => 1 }
+our %isTableElement = map { $_ => 1 }
  qw(tr td th thead tbody tfoot caption col colgroup);
 
 =head2 hashset %HTML::Tagset::isFormElement
@@ -253,7 +243,8 @@ a "form" element.
 
 =cut
 
-%isFormElement  = map {; $_ => 1 }
+# Declared earlier in the file
+%isFormElement = map { $_ => 1 }
  qw(input select option optgroup textarea button label);
 
 =head2 hashset %HTML::Tagset::isBodyElement
@@ -263,7 +254,7 @@ the "body" element of an HTML document.
 
 =cut
 
-%isBodyElement = map {; $_ => 1 } qw(
+our %isBodyElement = map { $_ => 1 } qw(
   h1 h2 h3 h4 h5 h6
   p div pre plaintext address blockquote
   xmp listing
@@ -277,9 +268,9 @@ the "body" element of an HTML document.
   ol ul dir menu li
   dl dt dd
   ins del
-  
+
   fieldset legend
-  
+
   map area
   applet param object
   isindex script noscript
@@ -300,7 +291,7 @@ the head or in the body.
 
 =cut
 
-%isHeadOrBodyElement = map {; $_ => 1 }
+our %isHeadOrBodyElement = map { $_ => 1 }
   qw(script isindex style object map area param noscript bgsound);
   # i.e., if we find 'script' in the 'body' or the 'head', don't freak out.
 
@@ -311,8 +302,8 @@ This hashset lists all known HTML elements.
 
 =cut
 
-%isKnown = (%isHeadElement, %isBodyElement,
-  map{; $_=>1 }
+our %isKnown = (%isHeadElement, %isBodyElement,
+  map{ $_ => 1 }
    qw( head body html
        frame frameset noframes
        ~comment ~pi ~directive ~literal
@@ -327,7 +318,7 @@ children or siblings.
 
 =cut
 
-%canTighten = %isKnown;
+our %canTighten = %isKnown;
 delete @canTighten{
   keys(%isPhraseMarkup), 'input', 'select',
   'xmp', 'listing', 'plaintext', 'pre',
@@ -387,7 +378,7 @@ barrier-tags.
 
 =cut
 
-@p_closure_barriers = qw(
+our @p_closure_barriers = qw(
   li blockquote
   ul ol menu dir
   dl dt dd
@@ -404,7 +395,7 @@ This hashset includes all elements whose content is CDATA.
 
 =cut
 
-%isCDATA_Parent = map {; $_ => 1 }
+our %isCDATA_Parent = map { $_ => 1 }
   qw(script style  xmp listing plaintext);
 
 # TODO: there's nothing else that takes CDATA children, right?
