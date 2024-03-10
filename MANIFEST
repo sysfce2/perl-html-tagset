@@ -3,6 +3,5 @@ lib/HTML/Tagset.pm
 Makefile.PL
 MANIFEST
 README.md
-t/00_about_verbose.t
-t/01_old_junk.t
+t/00-load.t
 t/pod.t
