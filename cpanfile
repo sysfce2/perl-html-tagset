@@ -7,4 +7,5 @@ on 'build' => sub {
 
 on 'test' => sub {
     requires 'Test::More', '0.95';
+    recommends 'Test::Pod', '1.14';
 };
