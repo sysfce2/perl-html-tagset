@@ -8,11 +8,11 @@ HTML::Tagset - data tables useful in parsing HTML
 
 =head1 VERSION
 
-Version 3.22
+Version 3.24
 
 =cut
 
-our $VERSION = '3.22';
+our $VERSION = '3.24';
 
 =head1 SYNOPSIS
 
