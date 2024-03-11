@@ -4,7 +4,7 @@ use 5.010;
 
 use strict;
 
-use ExtUtils::MakeMaker 7.00;
+use ExtUtils::MakeMaker 6.46;
 
 my %parms = (
     NAME             => 'HTML::Tagset',

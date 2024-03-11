@@ -2,7 +2,7 @@
 # https://metacpan.org/release/Module-CPANfile
 
 on 'build' => sub {
-    requires 'ExtUtils::MakeMaker', '7.00';
+    requires 'ExtUtils::MakeMaker', '6.46';
 };
 
 on 'test' => sub {
