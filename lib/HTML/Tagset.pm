@@ -450,13 +450,14 @@ C<HTML::LinkExtor>.  Then it was maintained by Sean M. Burke.
 
 Current maintainer: Andy Lester, C<< <andy at petdance.com> >>
 
+HTML::Tagset is part of the libwww-perl organization on GitHub.
+
+L<https://github.com/libwww-perl>
+
 =head1 BUGS
 
 Please report any bugs or feature requests to
-C<bug-html-tagset at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=HTML-Tagset>.  I will
-be notified, and then you'll automatically be notified of progress on
-your bug as I make changes.
+L<https://github.com/libwww-perl/HTML-Tagset/issues>.
 
 =cut
 
