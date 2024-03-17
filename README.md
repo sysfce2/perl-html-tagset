@@ -40,7 +40,7 @@ See https://metacpan.org/pod/HTML::Tagset
 ## COPYRIGHT
 
 Copyright 1999,2000 Sean M. Burke. Copyright 1995-2000 Gisle Aas. Copyright
-2000-2019 Andy Lester.
+2000-2024 Andy Lester.
 
 This library is free software; you can redistribute it and/or modify it
 under the terms of the Artistic License version 2.0.
